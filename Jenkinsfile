@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    	docker{image 'keerthanakumar12/hello'}
     
     stages {
         stage("Checkout code") {
@@ -14,7 +15,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("keerthanakumar12/hello:${env.BUILD_ID}")
+                    myapp = docker.build("DOCKER-HUB-USERNAME/hello:${env.BUILD_ID}")
                 }
             }
         }
