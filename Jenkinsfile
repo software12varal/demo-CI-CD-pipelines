@@ -1,8 +1,12 @@
 pipeline {
     agent any
-    	docker{image 'keerthanakumar12/hello'}
+    	environment {
+        	PROJECT_ID = 'qwiklabs-gcp-02-9f28b2897b9e'
+        	LOCATION = 'us-east1-b	'
+        	CREDENTIALS_ID = 'qwiklabs-gcp-02-9f28b2897b9e'        
+    	}
     
-    stages {
+    	stages {
         stage("Checkout code") {
             steps {
                 checkout scm
