@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'qwiklabs-gcp-01-510753d4c82e'
+        PROJECT_ID = 'qwiklabs-gcp-03-83d086698ed1'
         CLUSTER_NAME = 'jenkins-cd'
         LOCATION = 'us-east1-b'
-        CREDENTIALS_ID = 'student-00-bab1edbf7e40@qwiklabs.net'
+        CREDENTIALS_ID = 'qwiklabs-gcp-03-83d086698ed1'
     }
     stages {
         stage("Checkout code") {
@@ -15,7 +15,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    docker.build("keerthanakumar12/hello:${env.BUILD_ID}")
+                    myapp = docker.build("keerthanakumar12/hello:${env.BUILD_ID}")
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
                 }
             }
         }        
-        stage('Deploy to student-00-bab1edbf7e40@qwiklabs.net') {
+        stage('Deploy to qwiklabs-gcp-03-83d086698ed1') {
             steps{
                 sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
